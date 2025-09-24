@@ -646,6 +646,7 @@ def format_analysis_results(results):
     # 处理各个分析模块的结果 - 包含完整的智能体团队分析
     analysis_keys = [
         'market_report',
+        'trend_report',
         'fundamentals_report',
         'sentiment_report',
         'news_report',

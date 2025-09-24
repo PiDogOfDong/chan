@@ -40,6 +40,7 @@ class Propagator:
                 }
             ),
             "market_report": "",
+            "trend_report": "",
             "fundamentals_report": "",
             "sentiment_report": "",
             "news_report": "",

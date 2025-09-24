@@ -365,6 +365,11 @@ def render_detailed_analysis(state):
             'title': '📈 市场技术分析',
             'icon': '📈',
             'description': '技术指标、价格趋势、支撑阻力位分析'
+        },{
+             'key': 'trend_report',
+            'title': '📈 今天大盘分析分析',
+            'icon': '📈',
+            'description': '大盘情况分析'
         },
         {
             'key': 'fundamentals_report',

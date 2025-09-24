@@ -210,6 +210,7 @@ class ReportExporter:
         # 添加各个分析模块的内容 - 与CLI端保持一致的完整结构
         analysis_modules = [
             ('market_report', '📈 市场技术分析', '技术指标、价格趋势、支撑阻力位分析'),
+             ('trend_report', '📈 大盘技术分析', '技术指标、价格趋势、支撑阻力位分析'),
             ('fundamentals_report', '💰 基本面分析', '财务数据、估值水平、盈利能力分析'),
             ('sentiment_report', '💭 市场情绪分析', '投资者情绪、社交媒体情绪指标'),
             ('news_report', '📰 新闻事件分析', '相关新闻事件、市场动态影响分析'),
@@ -627,6 +628,11 @@ def save_modular_reports_to_results_dir(results: Dict[str, Any], stock_symbol: s
         # 定义报告模块映射（与CLI版本保持一致）
         report_modules = {
             'market_report': {
+                'filename': 'market_report.md',
+                'title': f'{stock_symbol} 股票技术分析报告',
+                'state_key': 'market_report'
+            },
+             'trend_report': {
                 'filename': 'market_report.md',
                 'title': f'{stock_symbol} 股票技术分析报告',
                 'state_key': 'market_report'
