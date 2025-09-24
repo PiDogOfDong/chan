@@ -555,6 +555,7 @@ sequenceDiagram
 #### 1. 顺序边 (Sequential Edges)
 ```python
 # 分析师完成后进入研究阶段
+workflow.add_edge("Msg Clear MarketTrend", "Bull Researcher")
 workflow.add_edge("Msg Clear Market", "Bull Researcher")
 workflow.add_edge("Msg Clear Social", "Bull Researcher")
 workflow.add_edge("Msg Clear News", "Bull Researcher")

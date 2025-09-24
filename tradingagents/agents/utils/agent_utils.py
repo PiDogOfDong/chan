@@ -1197,7 +1197,7 @@ class Toolkit:
     # 在Toolkit类中添加以下静态方法
     @staticmethod
     @tool
-    def get_market_turnover() -> str:
+    def get_market_turnover(dummy: Annotated[str, "占位参数，无需实际值，仅用于满足工具调用格式"] = "") -> str:
         """
         同花顺API获取市场成交额分时数据
         Returns:
@@ -1211,7 +1211,7 @@ class Toolkit:
 
     @staticmethod
     @tool
-    def get_market_distribution() -> str:
+    def get_market_distribution(dummy: Annotated[str, "占位参数，无需实际值，仅用于满足工具调用格式"] = "") -> str:
         """
         同花顺API获取市场涨跌分布数据
         Returns:
@@ -1259,7 +1259,7 @@ class Toolkit:
 
     @staticmethod
     @tool
-    def get_favored_sectors() -> str:
+    def get_favored_sectors(dummy: Annotated[str, "占位参数，无需实际值，仅用于满足工具调用格式"] = "") -> str:
         """
         同花顺API获取热门板块
         Returns:
@@ -1287,7 +1287,7 @@ class Toolkit:
 
     @staticmethod
     @tool
-    def get_SSE_datas() -> str:
+    def get_SSE_datas(dummy: Annotated[str, "占位参数，无需实际值，仅用于满足工具调用格式"] = "") -> str:
         """
         新浪财经API获取大盘数据
         Returns:

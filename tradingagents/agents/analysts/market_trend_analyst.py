@@ -5,6 +5,11 @@ from tradingagents.utils.tool_logging import log_analyst_module
 from tradingagents.utils.logging_init import get_logger
 logger = get_logger("default")
 
+# 新增导入：从langchain.agents导入必要的函数
+from langchain.agents import create_react_agent, AgentExecutor
+from langchain import hub
+from langchain_core.tools import BaseTool
+
 def create_market_trend_analyst(llm, toolkit):
     """创建大盘行情分析师角色"""
     @log_analyst_module("market_trend")
@@ -19,21 +24,21 @@ def create_market_trend_analyst(llm, toolkit):
 
         if toolkit.config["online_tools"]:            
             # 创建大盘分析工具集
-            from langchain_core.tools import BaseTool
-
             class MarketTrendTool(BaseTool):
                 name: str = "get_market_trend_data"
-                description: str = f"获取{current_date}大盘行情数据，包括成交额、涨跌分布、市场评分等"  # 正确：添加str类型注解
+                description: str = f"获取{current_date}大盘行情数据，包括成交额、涨跌分布、市场评分等"
 
                 def _run(self, query: str = "") -> str:
                     try:
+
+                        
                         # 通过toolkit调用工具函数获取数据
-                        turnover = toolkit.get_market_turnover()
-                        distribution = toolkit.get_market_distribution()
-                        score = toolkit.get_market_score(date=score_date)
-                        sectors = toolkit.get_favored_sectors()
-                        fund_flow = toolkit.get_sector_fund_flow(sector_type="行业")
-                        sse_data = toolkit.get_SSE_datas()
+                        turnover = toolkit.get_market_turnover.invoke({"dummy": ""})  # 占位参数
+                        distribution = toolkit.get_market_distribution.invoke({"dummy": ""})  # 占位参数
+                        score = toolkit.get_market_score.invoke({"date": score_date})  # 必须传date
+                        sectors = toolkit.get_favored_sectors.invoke({"dummy": ""})  # 补充占位参数调用
+                        fund_flow = toolkit.get_sector_fund_flow.invoke({"sector_type": "行业"})  # 必须传sector_type
+                        sse_data = toolkit.get_SSE_datas.invoke({"dummy": ""})  # 补充占位参数调用
 
                         return f"""【市场全景数据】
 {turnover}
@@ -80,9 +85,8 @@ def create_market_trend_analyst(llm, toolkit):
 
 分析必须基于工具获取的真实数据，每个判断都要有明确的数据支撑，操作建议要具体可行。"""
 
-
             try:
-                # 创建分析Agent
+                # 创建分析Agent - 使用与您正常代码相同的模式
                 prompt = hub.pull("hwchase17/react")
                 agent = create_react_agent(llm, tools, prompt)
 

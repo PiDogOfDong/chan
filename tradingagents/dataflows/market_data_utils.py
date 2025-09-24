@@ -5,7 +5,7 @@ import numpy as np
 import json
 from dataclasses import dataclass
 from typing import List, Dict, Optional
-
+import akshare as ak
 # 补充数据类定义（原代码中缺失，用于get_market_distribution函数）
 @dataclass
 class DistributionItem:

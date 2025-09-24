@@ -1,5 +1,3 @@
-# TradingAgents/graph/conditional_logic.py
-
 from tradingagents.agents.utils.agent_states import AgentState
 
 # 导入统一日志系统
@@ -36,16 +34,16 @@ class ConditionalLogic:
         return "Msg Clear Social"
 
     def should_continue_market_trend(self, state: AgentState):
+        """Determine if market trend analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
 
-            """Determine if market trend analysis should continue."""
-            messages = state["messages"]
-            last_message = messages[-1]
-
-            # 只有AIMessage才有tool_calls属性
-            if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
-                return "tools_market_trend"  # 继续调用工具
-            return "Msg Clear MarketTrend" 
-
+        # 只有AIMessage才有tool_calls属性
+        if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
+            return "tools_market_trend"
+        # 修复节点名格式（与setup.py中注册的节点名保持一致）
+        return "Msg Clear Market_trend" 
+        
     def should_continue_news(self, state: AgentState):
         """Determine if news analysis should continue."""
         messages = state["messages"]
@@ -68,7 +66,6 @@ class ConditionalLogic:
 
     def should_continue_debate(self, state: AgentState) -> str:
         """Determine if debate should continue."""
-
         if (
             state["investment_debate_state"]["count"] >= 2 * self.max_debate_rounds
         ):  # 3 rounds of back-and-forth between 2 agents
