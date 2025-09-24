@@ -37,14 +37,14 @@ class ConditionalLogic:
 
     def should_continue_market_trend(self, state: AgentState):
 
-        """Determine if market trend analysis should continue."""
-        messages = state["messages"]
-        last_message = messages[-1]
+            """Determine if market trend analysis should continue."""
+            messages = state["messages"]
+            last_message = messages[-1]
 
-        # 只有AIMessage才有tool_calls属性
-        if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
-            return "tools_market_trend"  # 继续调用工具
-        return "Msg Clear MarketTrend"
+            # 只有AIMessage才有tool_calls属性
+            if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
+                return "tools_market_trend"  # 继续调用工具
+            return "Msg Clear MarketTrend" 
 
     def should_continue_news(self, state: AgentState):
         """Determine if news analysis should continue."""

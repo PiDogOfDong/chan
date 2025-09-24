@@ -23,7 +23,7 @@ def create_market_trend_analyst(llm, toolkit):
 
             class MarketTrendTool(BaseTool):
                 name: str = "get_market_trend_data"
-                description: f"获取{current_date}大盘行情数据，包括成交额、涨跌分布、市场评分等"
+                description: str = f"获取{current_date}大盘行情数据，包括成交额、涨跌分布、市场评分等"  # 正确：添加str类型注解
 
                 def _run(self, query: str = "") -> str:
                     try:
