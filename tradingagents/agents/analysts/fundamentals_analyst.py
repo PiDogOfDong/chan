@@ -89,7 +89,7 @@ def create_fundamentals_analyst(llm, toolkit):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
         start_date = '2025-05-28'
-
+        market_trend_report = state.get("trend_report", "未获取到大盘分析数据")
         logger.debug(f"📊 [DEBUG] 输入参数: ticker={ticker}, date={current_date}")
         logger.debug(f"📊 [DEBUG] 当前状态中的消息数量: {len(state.get('messages', []))}")
         logger.debug(f"📊 [DEBUG] 现有基本面报告: {state.get('fundamentals_report', 'None')}")
@@ -152,12 +152,13 @@ def create_fundamentals_analyst(llm, toolkit):
         # 统一的系统提示，适用于所有股票类型
         system_message = (
             f"你是一位专业的股票基本面分析师。"
+            f"当前大盘行情分析如下：\n{market_trend_report}\n"
             f"⚠️ 绝对强制要求：你必须调用工具获取真实数据！不允许任何假设或编造！"
             f"任务：分析{company_name}（股票代码：{ticker}，{market_info['market_name']}）"
             f"🔴 立即调用 get_stock_fundamentals_unified 工具"
             f"参数：ticker='{ticker}', start_date='{start_date}', end_date='{current_date}', curr_date='{current_date}'"
             "📊 分析要求："
-            "- 基于真实数据进行深度基本面分析"
+            "- 基于真实数据进行深度基本面分析,需要结合大盘行情情况"
             f"- 计算并提供合理价位区间（使用{market_info['currency_name']}{market_info['currency_symbol']}）"
             "- 分析当前股价是否被低估或高估"
             "- 提供基于基本面的目标价位建议"

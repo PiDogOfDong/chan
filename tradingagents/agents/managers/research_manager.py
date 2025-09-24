@@ -13,7 +13,8 @@ def create_research_manager(llm, memory):
         sentiment_report = state["sentiment_report"]
         news_report = state["news_report"]
         fundamentals_report = state["fundamentals_report"]
-
+        # 新增：获取大盘分析报告
+        trend_report = state.get("trend_report", "未获取到大盘分析数据")
         investment_debate_state = state["investment_debate_state"]
 
         curr_situation = f"{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
@@ -53,6 +54,7 @@ def create_research_manager(llm, memory):
 \"{past_memory_str}\"
 
 以下是综合分析报告：
+大盘情况：{trend_report}
 市场研究：{market_research_report}
 
 情绪分析：{sentiment_report}
