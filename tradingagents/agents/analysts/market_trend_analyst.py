@@ -37,7 +37,7 @@ def create_market_trend_analyst(llm, toolkit):
                         distribution = toolkit.get_market_distribution.invoke({"dummy": ""})  # 占位参数
                         score = toolkit.get_market_score.invoke({"date": score_date})  # 必须传date
                         sectors = toolkit.get_favored_sectors.invoke({"dummy": ""})  # 补充占位参数调用
-                        fund_flow = toolkit.get_sector_fund_flow.invoke({"sector_type": "行业"})  # 必须传sector_type
+                        fund_flow = toolkit.get_sector_fund_flow.invoke({"dummy": ""})  # 补充占位参数调用
                         sse_data = toolkit.get_SSE_datas.invoke({"dummy": ""})  # 补充占位参数调用
 
                         return f"""【市场全景数据】

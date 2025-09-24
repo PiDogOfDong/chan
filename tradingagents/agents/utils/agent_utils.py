@@ -1272,7 +1272,7 @@ class Toolkit:
 
     @staticmethod
     @tool
-    def get_sector_fund_flow(sector_type: Annotated[str, "板块类型，如'行业'、'概念'、'地域'"]) -> str:
+    def get_sector_fund_flow(dummy: Annotated[str, "占位参数，无需实际值，仅用于满足工具调用格式"] = "") -> str:
         """
         AkShare获取板块资金流排名
         Args:

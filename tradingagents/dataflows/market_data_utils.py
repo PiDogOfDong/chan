@@ -216,7 +216,7 @@ def get_favored_sectors():
 def get_sector_fund_flow(sector_type: str) -> str:
     """AkShare获取今天板块资金流排名"""
     try:
-        df = ak.stock_sector_fund_flow_rank(indicator="今日", sector_type=sector_type)
+        df = ak.stock_sector_fund_flow_rank(indicator="今日")
         sorted_df = df.sort_values(by="今日涨跌幅", ascending=False)
         top_10 = sorted_df.head(10)
         bottom_10 = sorted_df.tail(10)
