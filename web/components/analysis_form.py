@@ -131,6 +131,11 @@ def render_analysis_form():
                 value='social' in cached_analysts,
                 help="分析社交媒体情绪、投资者情绪指标"
             )
+            market_trend_analyst = st.checkbox(
+                "💭 大盘分析师",
+                value='market_trend' in cached_analysts,
+                help="分析股市大盘信息"
+            )
 
         with col2:
             news_analyst = st.checkbox(
@@ -149,6 +154,8 @@ def render_analysis_form():
         selected_analysts = []
         if market_analyst:
             selected_analysts.append(("market", "市场分析师"))
+        if market_trend_analyst:
+            selected_analysts.append(("market_trend", "大盘分析师"))
         if social_analyst:
             selected_analysts.append(("social", "社交媒体分析师"))
         if news_analyst:
