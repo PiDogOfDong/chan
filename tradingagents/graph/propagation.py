@@ -41,6 +41,7 @@ class Propagator:
             ),
             "market_report": "",
             "trend_report": "",
+            "concept_report": "",
             "fundamentals_report": "",
             "sentiment_report": "",
             "news_report": "",

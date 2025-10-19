@@ -56,9 +56,10 @@ Adhere strictly to these instructions, and ensure your output is detailed, accur
         curr_trend_report = current_state["trend_report"]
         curr_sentiment_report = current_state["sentiment_report"]
         curr_news_report = current_state["news_report"]
+        curr_concept_report = current_state["concept_report"]
         curr_fundamentals_report = current_state["fundamentals_report"]
 
-        return f"{curr_market_report}\n\n{curr_trend_report}\n\n{curr_sentiment_report}\n\n{curr_news_report}\n\n{curr_fundamentals_report}"
+        return f"{curr_market_report}\n\n{curr_trend_report}\n\n{curr_concept_report}\n\n{curr_sentiment_report}\n\n{curr_news_report}\n\n{curr_fundamentals_report}"
 
     def _reflect_on_component(
         self, component_type: str, report: str, situation: str, returns_losses

@@ -43,7 +43,18 @@ class ConditionalLogic:
             return "tools_market_trend"
         # 修复节点名格式（与setup.py中注册的节点名保持一致）
         return "Msg Clear Market_trend" 
-        
+
+    def should_continue_concept(self, state: AgentState):
+        """Determine if concept analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
+
+        # 只有AIMessage才有tool_calls属性
+        if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
+            return "tools_concept"
+        # 修复节点名格式（与setup.py中注册的节点名保持一致）
+        return "Msg Clear Concept" 
+
     def should_continue_news(self, state: AgentState):
         """Determine if news analysis should continue."""
         messages = state["messages"]

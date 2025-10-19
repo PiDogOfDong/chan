@@ -48,7 +48,7 @@ class GraphSetup:
         self.react_llm = react_llm
 
     def setup_graph(
-        self, selected_analysts=["market", "social", "news", "fundamentals","market_trend"]
+        self, selected_analysts=["market", "social", "news", "fundamentals","market_trend","concept"]
     ):
         """Set up and compile the agent workflow graph.
 
@@ -59,6 +59,7 @@ class GraphSetup:
                 - "news": News analyst
                 - "fundamentals": Fundamentals analyst
                 - "market_trend": Market trend analyst
+                 - "concept": concept analyst
         """
         if len(selected_analysts) == 0:
             raise ValueError("Trading Agents Graph Setup Error: no analysts selected!")
@@ -85,6 +86,28 @@ class GraphSetup:
             )
             delete_nodes["market_trend"] = create_msg_delete()
             tool_nodes["market_trend"] = self.tool_nodes["market_trend"]
+
+        if "concept" in selected_analysts:
+            llm_provider = self.config.get("llm_provider", "").lower()
+            
+            if "dashscope" in llm_provider and hasattr(self.quick_thinking_llm, '__class__') and 'OpenAI' in self.quick_thinking_llm.__class__.__name__:
+                logger.debug(f"📊 [DEBUG] 使用概念行情分析师（阿里百炼OpenAI兼容模式）")
+            elif "dashscope" in llm_provider or "阿里百炼" in self.config.get("llm_provider", ""):
+                logger.debug(f"📊 [DEBUG] 使用概念行情分析师（阿里百炼原生模式）")
+            elif "deepseek" in llm_provider:
+                logger.debug(f"📊 [DEBUG] 使用概念行情分析师（DeepSeek）")
+            else:
+                logger.debug(f"📊 [DEBUG] 使用概念行情分析师")
+
+            analyst_nodes["concept"] = create_concept_analyst(
+               
+            )
+            #analyst_nodes["concept"] = create_concept_analyst(
+            #    self.quick_thinking_llm, self.toolkit
+            #)
+            delete_nodes["concept"] = create_msg_delete()
+            tool_nodes["concept"] = self.tool_nodes["concept"]
+
         if "market" in selected_analysts:
             # 现在所有LLM都使用标准市场分析师（包括阿里百炼的OpenAI兼容适配器）
             llm_provider = self.config.get("llm_provider", "").lower()
@@ -200,6 +223,10 @@ class GraphSetup:
             first_analyst = "market_trend"
             # 构建新的分析师顺序：market_trend在前， followed by other analysts (excluding market_trend)
             ordered_analysts = ["market_trend"] + [analyst for analyst in selected_analysts if analyst != "market_trend"]
+
+            #if "concept" in selected_analysts:
+            #    ordered_analysts.append("concept")
+
         else:
             # 如果没有选中market_trend，使用原来的顺序
             first_analyst = selected_analysts[0]

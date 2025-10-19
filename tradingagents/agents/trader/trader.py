@@ -12,6 +12,7 @@ def create_trader(llm, memory):
         company_name = state["company_of_interest"]
         investment_plan = state["investment_plan"]
         market_research_report = state["market_report"]
+        concept_research_report = state["concept_report"]
         trend_market_research_report = state["trend_report"]
         sentiment_report = state["sentiment_report"]
         news_report = state["news_report"]
@@ -35,7 +36,7 @@ def create_trader(llm, memory):
         logger.debug(f"💰 [DEBUG] 基本面报告长度: {len(fundamentals_report)}")
         logger.debug(f"💰 [DEBUG] 基本面报告前200字符: {fundamentals_report[:200]}...")
 
-        curr_situation = f"{market_research_report}\n\n{trend_market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
+        curr_situation = f"{trend_market_research_report}\n\n{concept_research_report}\n\n{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
 
         # 检查memory是否可用
         if memory is not None:

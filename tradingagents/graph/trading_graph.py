@@ -42,7 +42,7 @@ class TradingAgentsGraph:
 
     def __init__(
         self,
-        selected_analysts=["market", "market_trend","social", "news", "fundamentals"],
+        selected_analysts=["market", "market_trend","concept","social", "news", "fundamentals"],
         debug=False,
         config: Dict[str, Any] = None,
     ):
@@ -291,6 +291,13 @@ class TradingAgentsGraph:
                     self.toolkit.get_favored_sectors,
                 ]
             ),
+            "concept": ToolNode(
+                [
+                     # online tools
+                    self.toolkit.get_market_turnover
+                   
+                ]
+            ),
             "social": ToolNode(
                 [
                     # online tools
@@ -374,6 +381,7 @@ class TradingAgentsGraph:
             "trade_date": final_state["trade_date"],
             "market_report": final_state["market_report"],
             "trend_report": final_state["trend_report"],
+            "concept_report": final_state["concept_report"],
             "sentiment_report": final_state["sentiment_report"],
             "news_report": final_state["news_report"],
             "fundamentals_report": final_state["fundamentals_report"],
