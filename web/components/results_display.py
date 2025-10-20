@@ -378,6 +378,12 @@ def render_detailed_analysis(state):
             'description': '财务数据、估值水平、盈利能力分析'
         },
         {
+            'key': 'concept_report',
+            'title': '💭 热点概念分析',
+            'icon': '💭',
+            'description': '当前热门概念指标'
+        },
+        {
             'key': 'sentiment_report',
             'title': '💭 市场情绪分析',
             'icon': '💭',

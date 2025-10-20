@@ -23,7 +23,7 @@ load_dotenv(project_root / ".env", override=True)
 # 导入统一日志系统
 from tradingagents.utils.logging_init import setup_web_logging
 logger = setup_web_logging()
-
+from tradingagents.agents.analysts.concept_analyst import create_concept_analyst
 # 添加配置管理器
 try:
     from tradingagents.config.config_manager import token_tracker
@@ -544,6 +544,7 @@ def run_stock_analysis(stock_symbol, analysis_date, analysts, research_depth, ll
                     }, exc_info=True)
 
         # 如果真实分析失败，返回错误信息而不是误导性演示数据
+        """
         return {
             'stock_symbol': stock_symbol,
             'analysis_date': analysis_date,
@@ -557,6 +558,18 @@ def run_stock_analysis(stock_symbol, analysis_date, analysts, research_depth, ll
             'error': str(e),
             'is_demo': False,
             'error_reason': f"分析失败: {str(e)}"
+        }
+        """
+
+                # 修改最终返回部分
+        return {
+            'success': True,
+            'stock_symbol': stock_symbol,
+            'analysis_date': analysis_date.isoformat(),
+            'session_id': session_id,
+            'result': final_analysis,  # 确保这是可JSON序列化的结构
+            'execution_time': time.time() - analysis_start_time,
+            'token_usage': token_usage if TOKEN_TRACKING_ENABLED else None
         }
 
 def format_analysis_results(results):
@@ -647,6 +660,7 @@ def format_analysis_results(results):
     analysis_keys = [
         'market_report',
         'trend_report',
+        'concept_report',
         'fundamentals_report',
         'sentiment_report',
         'news_report',
@@ -731,7 +745,7 @@ def validate_analysis_params(stock_symbol, analysis_date, analysts, research_dep
     if not analysts or len(analysts) == 0:
         errors.append("必须至少选择一个分析师")
     
-    valid_analysts = ['market','market_trend', 'social', 'news', 'fundamentals']
+    valid_analysts = ['market','market_trend','concept', 'social', 'news', 'fundamentals']
     invalid_analysts = [a for a in analysts if a not in valid_analysts]
     if invalid_analysts:
         errors.append(f"无效的分析师类型: {', '.join(invalid_analysts)}")

@@ -1,5 +1,20 @@
 # TradingAgents-CN Web管理界面
 
+# API接口说明
+
+## 分析股票
+- **URL**: `/api/analyze`
+- **方法**: `POST`
+- **请求体**:
+```json
+{
+  "stock_symbol": "AAPL",
+  "market_type": "美股",
+  "analysis_date": "2024-06-01",
+  "research_depth": 3,
+  "analysts": ["market", "fundamentals"]
+}
+
 基于Streamlit构建的TradingAgents Web管理界面，提供直观的股票分析体验。支持多种LLM提供商和AI模型，让您轻松进行专业的股票投资分析。
 
 ## ✨ 功能特性

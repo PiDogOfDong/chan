@@ -149,6 +149,12 @@ def render_analysis_form():
                 value='fundamentals' in cached_analysts,
                 help="分析财务数据、公司基本面、估值水平"
             )
+
+            concept_analyst = st.checkbox(
+                "💭 热点概念分析师",
+                value='concept' in cached_analysts,
+                help="分析股市热门概念信息"
+            )
         
         # 收集选中的分析师
         selected_analysts = []
@@ -156,6 +162,8 @@ def render_analysis_form():
             selected_analysts.append(("market", "市场分析师"))
         if market_trend_analyst:
             selected_analysts.append(("market_trend", "大盘分析师"))
+        if concept_analyst:
+            selected_analysts.append(("concept", "热门概念分析师"))
         if social_analyst:
             selected_analysts.append(("social", "社交媒体分析师"))
         if news_analyst:

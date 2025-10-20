@@ -15,6 +15,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import uuid
 from datetime import timedelta, datetime  # 显式导入datetime类
+# 在文件顶部添加 threading 导入
 
 # 添加项目根目录到Python路径
 project_root = Path(__file__).parent.parent
@@ -694,7 +695,15 @@ def render_auto_selection_config():
 
 def main():
     """主应用程序"""
+    import threading
+    import subprocess  # 确保也导入了 subprocess
 
+    def start_api_server():
+                time.sleep(2)  # 等待主应用启动
+                subprocess.run(["python", "-m", "uvicorn", "web.api:app", "--reload"])
+            
+    api_thread = threading.Thread(target=start_api_server, daemon=True)
+    api_thread.start()
     # 初始化会话状态
     initialize_session_state()
 

@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 # 移除：matplotlib相关导入（图表功能）
 from typing import List, Dict, Optional, Tuple
 from scipy import stats
+from .stock_filter_analyzer import ConceptStockFilter
 
 # 配置日志（保留原逻辑）
 logging.basicConfig(
@@ -596,8 +597,10 @@ class CorrectedConceptAnalyzer:
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(json_data, f, ensure_ascii=False, indent=2)
             logger.info(f"推荐概念及成分股已导出到JSON文件: {filename}")
+            return  filename
         except Exception as e:
             logger.error(f"导出JSON文件失败: {str(e)}")
+            return  ""
             raise
     
     def run(self, initial_top_n: int = 30, days_type: int = 5) -> pd.DataFrame:
@@ -630,8 +633,20 @@ class CorrectedConceptAnalyzer:
             # 修改点1：移除可视化调用（原self.visualize_top_concepts(...)）
             # 修改点2：新增JSON导出（调用新增的方法）
             if not candidates.empty:
-                self.export_concept_stocks_to_json(candidates)
-            
+                concept_file=self.export_concept_stocks_to_json(candidates)
+                    # 初始化筛选器
+                if concept_file:
+                        filter_agent = ConceptStockFilter(concept_file)
+                        
+                        # 执行筛选
+                        recommendations = filter_agent.filter_all_concepts()
+                        
+                        # 保存结果
+                        if recommendations:
+                            output_file = filter_agent.save_recommendations(recommendations)
+                            print(f"\n共推荐 {len(recommendations)} 个概念下的股票")
+                        else:
+                            print("没有找到符合条件的推荐股票")
             # 保留原CSV导出
             self.export_results()
             
